@@ -1,6 +1,6 @@
 # Task 1 – Tool Installation
 
-The goal of Task 1 is to install all essential tools required for the VSD Internship 2024.
+The goal of Task 1 is to install all essential tools required for the VSD Internship 2025.
 
 ---
 
