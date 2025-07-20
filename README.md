@@ -9,7 +9,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 ## 🧑‍💻 Profile
 
 - **Name:** Sakthi Adhavan M
-- **College:** Madras Institute of Technology  
+- **College:** Madras Institute of Technology,Chennai.  
 - **GitHub:** [github.com/SakthiAdhavan20](https://github.com/SakthiAdhavan20)  
 - **LinkedIn:** [www.linkedin.com/in/sakthi-adhavan](https://www.linkedin.com/in/sakthi-adhavan)  
 - **Email:** sakthiadhavan.mit@gmail.com  
