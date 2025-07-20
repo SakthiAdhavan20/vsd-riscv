@@ -2,7 +2,7 @@
 
 Welcome to my internship submission repository for the **VSDSquadron Research Internship 2025**, organized by [VSD - VLSI System Design](https://www.vlsisystemdesign.com/), under the mentorship of **Kunal Ghosh**.
 
-This internship focuses on open-source SoC design, RISC-V processor architecture, Verilog simulation, and hands-on toolchain installation.
+This internship offers practical exposure to RISC-V architecture, toolchain setup, Verilog simulation, instruction decoding, software debugging, and embedded system bring-up using open-source tools — laying the groundwork for future SoC design exploration.
 
 ---
 
