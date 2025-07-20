@@ -1,4 +1,4 @@
-# VSDSquadron Research Internship 2025 – Sakthi Adhavan
+# VSDSquadron Research Internship 2025 – Sakthi Adhavan M
 
 Welcome to my internship submission repository for the **VSDSquadron Research Internship 2025**, organized by [VSD - VLSI System Design](https://www.vlsisystemdesign.com/), under the mentorship of **Kunal Ghosh**.
 
@@ -8,7 +8,7 @@ This internship focuses on open-source SoC design, RISC-V processor architecture
 
 ## 🧑‍💻 Profile
 
-- **Name:** Sakthi Adhavan  
+- **Name:** Sakthi Adhavan M
 - **College:** Madras Institute of Technology  
 - **GitHub:** [github.com/SakthiAdhavan20](https://github.com/SakthiAdhavan20)  
 - **LinkedIn:** [www.linkedin.com/in/sakthi-adhavan](https://www.linkedin.com/in/sakthi-adhavan)  
