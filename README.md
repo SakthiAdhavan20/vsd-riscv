@@ -163,6 +163,6 @@ All tool screenshots are inside the `Task 1/` folder and embedded above.
 
 ## 📣 Acknowledgement
 
-Thanks to [Kunal Ghosh](https://www.linkedin.com/in/kunalg101/) and VSD for enabling students to explore the world of VLSI and RISC-V.
+Thanks to [Kunal Ghosh](https://www.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836/) and VSD for enabling students to explore the world of VLSI and RISC-V.
 
 ---
