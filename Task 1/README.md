@@ -120,7 +120,8 @@ sudo apt install xdot
 
 ## 🔗 Related Subtask
 
-➡️ [Task 1.2 – RISC-V Assembly Analysis](Task%201/Task1.2/README.md)
+➡️ [Task 1.2 – RISC-V Assembly Analysis](Task1.2/README.md)
+
 
 
 
