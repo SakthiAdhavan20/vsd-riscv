@@ -146,7 +146,7 @@ Ready to begin RTL simulation, synthesis, and RISC-V experiments.
 
 ## 🔗 Related Subtask
 
-➡️ [Task 1.2 – RISC-V Assembly Analysis](Task1/Task1.2/README.md)
+➡️ [Task 1.2 – RISC-V Assembly Analysis](Task%201/Task1.2/README.md)
 
 </details>
 
