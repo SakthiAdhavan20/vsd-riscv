@@ -113,6 +113,11 @@ riscv64-unknown-elf-objdump -d sum1ton.o | less
 ## Files Included
 
 - `sum1ton.c` – Source code file
-- `sum1ton.o` – RISC-V compiled object file (can be recompiled)
 - `screenshots/` – Directory containing all step screenshots
+
+---
+
+🔙 [Back to Task 1](../README.md)
+
+
 
