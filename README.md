@@ -143,9 +143,15 @@ sudo apt install xdot
 All tools were successfully installed and verified on Ubuntu 20.04 VM.  
 Ready to begin RTL simulation, synthesis, and RISC-V experiments.
 
+
+## 🔗 Related Subtask
+
+➡️ [Task 1.2 – RISC-V Assembly Analysis](Task1/Task1.2/README.md)
+
 </details>
 
 ---
+
 
 ## 📌 Note
 
