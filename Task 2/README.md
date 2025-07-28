@@ -20,6 +20,8 @@ int main() {
 }
 ```
 
+![odd_no_code](screenshots/odd_no_code.png)
+
 ## Step 2: Native Compilation and Execution
 
 Compile using GCC:
@@ -36,7 +38,7 @@ Odd numbers from 1 to 30 are:
 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29
 ```
 
-Screenshot: `screenshots/gcc_output.png`
+![Native GCC Output](screenshots/gcc_output.png)
 
 ## Step 3: RISC-V Compilation
 
@@ -60,13 +62,13 @@ riscv64-unknown-elf-gcc -Ofast -march=rv64im -mabi=lp64 -o odd_no.o odd_no.c
 riscv64-unknown-elf-objdump -d odd_no.o | less
 ```
 
--O1 output:  
-Start of main: `0x0000000000010184`  
-Screenshot: `screenshots/objdump_O1.png`
+-O1 output: 
+Start of main: `0x0000000000010184` 
+![Objdump O1](screenshots/objdump_O1.png)
 
--Ofast output:  
-Start of main: `0x00000000000100b0`  
-Screenshot: `screenshots/objdump_Ofast.png`
+-Ofast output: 
+Start of main: `0x00000000000100b0` 
+![Objdump Ofast](screenshots/objdump_Ofast.png)
 
 ## Step 5: Spike Debugger
 
@@ -105,21 +107,19 @@ Calculation:
 0x3ffffffb50 - 0x20 = 0x3ffffffb30
 ```
 
-Screenshots:
+![Spike O1 – Initial SP](screenshots/spike_O1.png)  
 
-- `screenshots/spike_O1_1.png` – Initial stack pointer (before addi)
-- `screenshots/spike_O1_2.png` – Stack pointer after executing `addi`
 
 ### For -Ofast binary:
 
-Repeat same steps using starting address `0x100b0`:
+Repeat same steps using starting address 0x100b0:
 
 ```bash
 (spike) until pc 0 100b0
 (spike) reg 0 sp
 ```
 
-Screenshot: `screenshots/spike_Ofast.png`
+![Spike Ofast](screenshots/spike_Ofast.png)
 
 ## Summary Table
 
@@ -136,15 +136,4 @@ Screenshot: `screenshots/spike_Ofast.png`
 - Verified stack pointer (`sp`) decreased by 32 using `addi sp, sp, -32`
 - Compared instruction layout between `-O1` and `-Ofast` optimizations
 - Learned to interpret PC, SP, and control flow during RISC-V execution
-
-## Screenshots List
-
-```
-screenshots/gcc_output.png
-screenshots/objdump_O1.png
-screenshots/objdump_Ofast.png
-screenshots/spike_O1_1.png
-screenshots/spike_O1_2.png
-screenshots/spike_Ofast.png
-```
 
