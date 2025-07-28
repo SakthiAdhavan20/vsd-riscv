@@ -22,7 +22,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 |------|-------------|--------|
 | [Task 1](Task%201/README.md) | Tool Installation (Ubuntu, Toolchain, GTKWave, etc.) | ✅ Completed |
 | [Task 2](Task%202/README.md) | RISC-V Assembly and Spike Debugging (Odd Numbers Program) | ✅ Completed |
-| Task 3 | Compile C code with GCC and RISC-V Toolchain | ⏳ In Progress |
+| [Task 3](Task%203/README.md) | RISC-V Instruction Format and 32-bit Encoding | ⏳ In Progress |
 | Task 4 | Spike Simulation and Debugging | ⏳ In Progress |
 | Task 5 | Functional Simulation of RISC-V Netlist | ⏳ In Progress |
 | Task 6 | Build and Upload to VSDSquadron Mini | ⏳ In Progress |
@@ -51,6 +51,17 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 ➡️ [Task 2 – RISC-V Assembly and Spike Debugging](Task%202/README.md)
 
 </details>
+
+
+<details>
+<summary><strong>Task 3 – RISC-V Instruction Format (Click to Expand)</strong></summary>
+
+<br>
+
+➡️ [Task 3 – RISC-V Instruction Format and 32-bit Encoding](Task%203/README.md)
+
+</details>
+
 
 ---
 
