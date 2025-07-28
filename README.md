@@ -9,23 +9,23 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 ## 🧑‍💻 Profile
 
 - **Name:** Sakthi Adhavan M
-- **College:** Madras Institute of Technology,Chennai.  
+- **College:** Madras Institute of Technology, Chennai.  
 - **GitHub:** [github.com/SakthiAdhavan20](https://github.com/SakthiAdhavan20)  
 - **LinkedIn:** [www.linkedin.com/in/sakthi-adhavan](https://www.linkedin.com/in/sakthi-adhavan)  
-- **Email:** sakthiadhavan.mit@gmail.com  
+- **Email:** sakthiadhavan.mit@gmail.com 
 
 ---
 
-## 📁 Tasks Overview
+## Tasks Overview
 
 | Task | Description | Status |
 |------|-------------|--------|
-| 🔧 [Task 1](#task-1--tool-installation-click-to-expand) | Tool Installation (Ubuntu, Toolchain, GTKWave, etc.) | ✅ Completed |
-| 🔍 Task 2 | RISC-V Instruction Type and Format | ⏳ In Progress |
-| ⚙️ Task 3 | Compile C code with GCC and RISC-V Toolchain | ⏳ In Progress |
-| 🐞 Task 4 | Spike Simulation and Debugging | ⏳ In Progress |
-| 🔁 Task 5 | Functional Simulation of RISC-V Netlist | ⏳ In Progress |
-| 📦 Task 6 | Build and Upload to VSDSquadron Mini | ⏳ In Progress |
+| [Task 1](Task%201/README.md) | Tool Installation (Ubuntu, Toolchain, GTKWave, etc.) | ✅ Completed |
+| [Task 2](Task%202/README.md) | RISC-V Assembly and Spike Debugging (Odd Numbers Program) | ✅ Completed |
+| Task 3 | Compile C code with GCC and RISC-V Toolchain | ⏳ In Progress |
+| Task 4 | Spike Simulation and Debugging | ⏳ In Progress |
+| Task 5 | Functional Simulation of RISC-V Netlist | ⏳ In Progress |
+| Task 6 | Build and Upload to VSDSquadron Mini | ⏳ In Progress |
 
 ---
 
@@ -39,6 +39,16 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 ➡️ [Task 1 – Tool Installation](Task%201/README.md) 
 
 ➡️ [Task 1.2 – RISC-V Assembly Analysis](Task%201/Task1.2/README.md)
+
+</details>
+
+
+<details>
+<summary><strong>Task 2 – RISC-V Assembly & Spike Debugging (Click to Expand)</strong></summary>
+
+<br>
+
+➡️ [Task 2 – RISC-V Assembly and Spike Debugging](Task%202/README.md)
 
 </details>
 
