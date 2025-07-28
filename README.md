@@ -16,7 +16,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 
 ---
 
-## Tasks Overview
+## 🗂️ Tasks Overview
 
 | Task | Description | Status |
 |------|-------------|--------|
