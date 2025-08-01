@@ -172,23 +172,62 @@ int arr[15];
 int main() {
     int i, sum = 0;
 
+    printf("Odd numbers from 1 to 30:\n");
     for(i = 0; i < 15; i++) {
         arr[i] = 2 * i + 1;
     }
 
     for(i = 0; i < 15; i++) {
-        if (arr[i] % 2 != 0) {
-            printf("%d ", arr[i]);
-            sum += arr[i];
-        }
+        printf("%d ", arr[i]);
+        sum += arr[i];
     }
 
-    printf("\nSum = %d\n", sum);
+    printf("\nSum of odd numbers from 1 to 30: %d\n", sum);
 
     return 0;
 }
 ```
 
+### Native Compilation and Execution
+
+Compile using GCC:
+
+```bash
+gcc sum_odd_no.c
+./a.out
+```
+Expected output:
+
+```
+Odd numbers from 1 to 30: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 
+Sum of odd numbers from 1 to 30: 225
+```
+### RISC-V Compilation
+
+Using RISC-V toolchain to compile with different optimization levels.
+
+
+With -O1 optimization:
+
+```bash
+riscv64-unknown-elf-gcc -O1 -march=rv64im -mabi=lp64 -o sum_odd_no.o sum_odd_no.c
+```
+
+With -Ofast optimization:
+
+```bash
+riscv64-unknown-elf-gcc -Ofast -march=rv64im -mabi=lp64 -o sum_odd_no.o sum_odd_no.c
+```
+### Disassembly Using objdump
+
+```bash
+riscv64-unknown-elf-objdump -d sum_odd_no.o | less
+```
+Or save to a file for easier analysis:
+
+```bash
+riscv64-unknown-elf-objdump -d sum_odd_no.o > disas.txt
+```
 ---
 
 ## RISC-V Instruction Breakdown
