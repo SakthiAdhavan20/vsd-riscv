@@ -184,8 +184,9 @@ int main() {
     printf("\nSum = %d\n", sum);
 
     return 0;
-}
+} ```
 
+---
 
 ## RISC-V Instruction Breakdown
 
