@@ -15,6 +15,9 @@
 
 ### 2. Field Layout by Format
 
+![RISC-V Instruction Formats](screenshots/RISC-V_Instruction_Formats.png)
+
+
 #### R-Type
 
 | funct7 | rs2 | rs1 | funct3 | rd | opcode |
