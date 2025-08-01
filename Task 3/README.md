@@ -1,3 +1,8 @@
+# Task 3 – RISC-V Instruction Format and 32-bit Encoding
+
+This task involves identifying and decoding 15 unique RISC-V instructions from a compiled ELF binary. Each instruction is disassembled, and its format is analyzed based on the RISC-V specification. This includes determining the instruction type (R/I/S/B/U/J), extracting fields such as opcode, funct3, rs1, rs2, rd, and immediate values, and representing the 32-bit instruction layout.
+
+
 ## RISC-V Instruction Formats
 
 ### 1. Instruction Format Types
@@ -151,3 +156,244 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 | F/D/Q     | Floating-Point (32/64/128-bit) | flw, fsd                    |
 | C         | Compressed (16-bit)            | c.addi, c.sw, c.jal         |
 | Zicsr     | CSR Access/Manipulation        | csrrw, csrrs, csrrc         |
+
+
+## RISC-V Instruction Breakdown
+
+---
+
+### 1. Instruction: `lui a0, 0x21`
+
+- **Opcode**: 0110111 (7 bits)
+- **rd (a0 = x10)**: 01010 (5 bits)
+- **Immediate (0x21 << 12)**: 00000000001000010000 (20 bits)
+
+**Machine Code**: `00021537`  
+**Type**: U-type
+
+**Bitwise Layout**:  
+`00000000001000010000 01010 0110111`
+
+---
+
+### 2. Instruction: `addi sp, sp, -32`
+
+- **Opcode**: 0010011 (7 bits)
+- **funct3**: 000
+- **rs1 (sp = x2)**: 00010
+- **rd (sp = x2)**: 00010
+- **Immediate (-32)**: 111111111000
+
+**Machine Code**: `fe010113`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`111111111000 00010 000 00010 0010011`
+
+---
+
+### 3. Instruction: `addi a0, a0, -112`
+
+- **Opcode**: 0010011
+- **funct3**: 000
+- **rs1 (a0 = x10)**: 01010
+- **rd (a0 = x10)**: 01010
+- **Immediate (-112)**: 111110010000
+
+**Machine Code**: `f9050513`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`111110010000 01010 000 01010 0010011`
+
+---
+
+### 4. Instruction: `sd s0, 16(sp)`
+
+- **Opcode**: 0100011
+- **funct3**: 011
+- **rs1 (sp = x2)**: 00010
+- **rs2 (s0 = x8)**: 01000
+- **Immediate (16)**: imm[11:5]=0000000, imm[4:0]=10000
+
+**Machine Code**: `00813823`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 01000 00010 011 10000 0100011`
+
+---
+
+### 5. Instruction: `sd s1, 8(sp)`
+
+- **Opcode**: 0100011
+- **funct3**: 011
+- **rs1**: 00010 (sp)
+- **rs2**: 01001 (s1)
+- **Immediate (8)**: imm[11:5]=0000000, imm[4:0]=01000
+
+**Machine Code**: `00913423`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 01001 00010 011 01000 0100011`
+
+---
+
+### 6. Instruction: `sd s2, 0(sp)`
+
+- **Opcode**: 0100011
+- **funct3**: 011
+- **rs1**: 00010 (sp)
+- **rs2**: 10010 (s2)
+- **Immediate (0)**: 000000000000
+
+**Machine Code**: `01213023`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 10010 00010 011 00000 0100011`
+
+---
+
+### 7. Instruction: `sd ra, 24(sp)`
+
+- **Opcode**: 0100011
+- **funct3**: 011
+- **rs1**: 00010 (sp)
+- **rs2**: 00001 (ra)
+- **Immediate (24)**: imm[11:5]=0000000, imm[4:0]=11000
+
+**Machine Code**: `00113c23`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 00001 00010 011 11000 0100011`
+
+---
+
+### 8. Instruction: `li s0, 1` → Pseudo-instruction  
+> Real: `addi s0, x0, 1`
+
+- **Opcode**: 0010011
+- **funct3**: 000
+- **rs1**: 00000 (x0)
+- **rd**: 01000 (s0)
+- **Immediate**: 000000000001
+
+**Machine Code**: `00100413`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000001 00000 000 01000 0010011`
+
+---
+
+### 9. Instruction: `jal ra, 106d0 <puts>`
+
+- **Opcode**: 1101111
+- **rd**: 00001 (ra)
+- **Immediate**: 000000000110000000000 (offset format)
+
+**Machine Code**: `600000ef`  
+**Type**: J-type
+
+**Bitwise Layout**:  
+`imm[20|10:1|11|19:12] 00001 1101111`
+
+---
+
+### 10. Instruction: `lui s2, 0x21`
+
+- **Opcode**: 0110111
+- **rd (s2 = x18)**: 10010
+- **Immediate**: 00000000001000010000
+
+**Machine Code**: `00021937`  
+**Type**: U-type
+
+**Bitwise Layout**:  
+`00000000001000010000 10010 0110111`
+
+---
+
+### 11. Instruction: `li s1, 31` → Pseudo-instruction  
+> Real: `addi s1, x0, 31`
+
+- **Opcode**: 0010011
+- **rd (s1 = x9)**: 01001
+- **rs1**: 00000
+- **Immediate**: 000000011111
+
+**Machine Code**: `01f00493`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000011111 00000 000 01001 0010011`
+
+---
+
+### 12. Instruction: `j 100e8` → Pseudo-instruction  
+> Real: `jal x0, offset`
+
+- **Opcode**: 1101111
+- **rd**: 00000 (x0)
+- **Immediate**: (offset from PC)
+
+**Machine Code**: `00c0006f`  
+**Type**: J-type
+
+**Bitwise Layout**:  
+`imm[20|10:1|11|19:12] 00000 1101111`
+
+---
+
+### 13. Instruction: `addiw s0, s0, 1`
+
+- **Opcode**: 0011011
+- **funct3**: 000
+- **rs1 (s0 = x8)**: 01000
+- **rd (s0 = x8)**: 01000
+- **Immediate**: 000000000001
+
+**Machine Code**: `0014041b`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000001 01000 000 01000 0011011`
+
+---
+
+### 14. Instruction: `beq s0, s1, 10104`
+
+- **Opcode**: 1100011
+- **funct3**: 000
+- **rs1 (s0 = x8)**: 01000
+- **rs2 (s1 = x9)**: 01001
+- **Immediate (0x029)**: imm[12|10:5]=0, imm[4:1|11]=1001_0
+
+**Machine Code**: `02940063`  
+**Type**: B-type
+
+**Bitwise Layout**:  
+`imm[12|10:5] 01001 01000 000 imm[4:1|11] 1100011`
+
+---
+
+### 15. Instruction: `andi a5, s0, 1`
+
+- **Opcode**: 0010011
+- **funct3**: 111
+- **rs1 (s0 = x8)**: 01000
+- **rd (a5 = x15)**: 01111
+- **Immediate**: 000000000001
+
+**Machine Code**: `00147793`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000001 01000 111 01111 0010011`
+
+---
+
+
