@@ -235,13 +235,214 @@ riscv64-unknown-elf-objdump -d sum_odd_no.o > disas.txt
 ![RISC-V Instruction Breakdown](screenshots/RISC-V_Instruction_Breakdown.png)
 ---
 
-### 1. Instruction: `lui a0, 0x21`
+### 1. Instruction: `sext.w a5, s1`
 
 ![RISC-V Instruction 1](screenshots/RISC-V_Instruction_1.png)
 
-- **Opcode**: 0110111 (7 bits)
-- **rd (a0 = x10)**: 01010 (5 bits)
-- **Immediate (0x21 << 12)**: 00000000001000010000 (20 bits)
+- **Opcode**: 0111011 (7 bits)
+- **rd (a5 = x15)**: 01111 (5 bits)
+- **funct3**: 000 (3 bits)
+- **rs1 (s1 = x9)**: 01001 (5 bits)
+- **rs2**: 00000 (5 bits)
+- **funct7**: 0000000 (7 bits)
+
+**Machine Code**: `0004879b`  
+**Type**: R-type
+
+**Bitwise Layout**:  
+`0000000 01001 00000 000 01111 0111011`
+
+---
+
+### 2. Instruction: `addw s2, a5, s2`
+
+![RISC-V Instruction 2](screenshots/RISC-V_Instruction_2.png)
+
+- **Opcode**: 0111011 (7 bits)
+- **rd (s2 = x18)**: 10010
+- **funct3**: 000
+- **rs1 (a5 = x15)**: 01111
+- **rs2 (s2 = x18)**: 10010
+- **funct7**: 0000000
+
+**Machine Code**: `0127893b`  
+**Type**: R-type
+
+**Bitwise Layout**:  
+`0000000 10010 01111 000 10010 0111011`
+
+---
+
+### 3. Instruction: `addi sp, sp, -48`
+
+![RISC-V Instruction 3](screenshots/RISC-V_Instruction_3.png)
+
+- **Opcode**: 0010011
+- **rd (sp = x2)**: 00010
+- **funct3**: 000
+- **rs1 (sp = x2)**: 00010
+- **Immediate (-48)**: 11111111110010000
+
+**Machine Code**: `fd010113`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`111111111100 00010 000 00010 0010011`
+
+---
+
+### 4. Instruction: `addi a0, a0, -656`
+
+![RISC-V Instruction 4](screenshots/RISC-V_Instruction_4.png)
+
+- **Opcode**: 0010011
+- **rd (a0 = x10)**: 01010
+- **funct3**: 000
+- **rs1 (a0 = x10)**: 01010
+- **Immediate (-656)**: 1111110100110000
+
+**Machine Code**: `d7050513`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`111101000111 01010 000 01010 0010011`
+
+---
+
+### 5. Instruction: `addiw s1, s1, 2`
+
+![RISC-V Instruction 5](screenshots/RISC-V_Instruction_5.png)
+
+- **Opcode**: 0011011
+- **rd (s1 = x9)**: 01001
+- **funct3**: 000
+- **rs1 (s1 = x9)**: 01001
+- **Immediate**: 000000000010
+
+**Machine Code**: `0024849b`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000010 01001 000 01001 0011011`
+
+---
+
+### 6. Instruction: `mv a1, a5` (Pseudo)  
+> Real: `addi a1, a5, 0`
+
+![RISC-V Instruction 6](screenshots/RISC-V_Instruction_6.png)
+
+- **Opcode**: 0010011
+- **rd (a1 = x11)**: 01011
+- **funct3**: 000
+- **rs1 (a5 = x15)**: 01111
+- **Immediate**: 000000000000
+
+**Machine Code**: `00078593`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000000 01111 000 01011 0010011`
+
+---
+
+### 7. Instruction: `bne s0, s4, 100f0`
+
+![RISC-V Instruction 7](screenshots/RISC-V_Instruction_7.png)
+
+- **Opcode**: 1100011
+- **funct3**: 001
+- **rs1 (s0 = x8)**: 01000
+- **rs2 (s4 = x20)**: 10100
+- **Immediate (offset = -12)**: `imm[12|10:5|4:1|11]` → `1 111100 - 0011 0` = -12
+
+**Machine Code**: `fd441ee3`  
+**Type**: B-type
+
+**Bitwise Layout**:  
+`1 111100 10100 01000 001 00110 1100011`
+
+---
+
+### 8. Instruction: `sw a5, 0(s0)`
+
+![RISC-V Instruction 8](screenshots/RISC-V_Instruction_8.png)
+
+- **Opcode**: 0100011
+- **funct3**: 010
+- **rs1 (s0 = x8)**: 01000
+- **rs2 (a5 = x15)**: 01111
+- **Immediate (0)**: 000000000000
+
+**Machine Code**: `00f42023`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 01111 01000 010 00000 0100011`
+
+---
+
+### 9. Instruction: `sd s4, 0(sp)`
+
+![RISC-V Instruction 9](screenshots/RISC-V_Instruction_9.png)
+
+- **Opcode**: 0100011
+- **funct3**: 011
+- **rs1 (sp = x2)**: 00010
+- **rs2 (s4 = x20)**: 10100
+- **Immediate (0)**: 000000000000
+
+**Machine Code**: `01413023`  
+**Type**: S-type
+
+**Bitwise Layout**:  
+`0000000 10100 00010 011 00000 0100011`
+
+---
+
+### 10. Instruction: `lw a5, 0(s0)`
+
+![RISC-V Instruction 10](screenshots/RISC-V_Instruction_10.png)
+
+- **Opcode**: 0000011
+- **rd (a5 = x15)**: 01111
+- **funct3**: 010
+- **rs1 (s0 = x8)**: 01000
+- **Immediate**: 000000000000
+
+**Machine Code**: `00042783`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000000 01000 010 01111 0000011`
+
+---
+
+### 11. Instruction: `ld ra, 40(sp)`
+
+![RISC-V Instruction 11](screenshots/RISC-V_Instruction_11.png)
+
+- **Opcode**: 0000011
+- **rd (ra = x1)**: 00001
+- **funct3**: 011
+- **rs1 (sp = x2)**: 00010
+- **Immediate**: 000000000101000
+
+**Machine Code**: `02813083`  
+**Type**: I-type
+
+**Bitwise Layout**:  
+`000000000101000 00010 011 00001 0000011`
+
+---
+
+### 12. Instruction: `lui a0, 0x21`
+
+![RISC-V Instruction 12](screenshots/RISC-V_Instruction_12.png)
+
+- **Opcode**: 0110111
+- **rd (a0 = x10)**: 01010
+- **Immediate (upper 20 bits)**: 00000000001000010000
 
 **Machine Code**: `00021537`  
 **Type**: U-type
@@ -251,130 +452,31 @@ riscv64-unknown-elf-objdump -d sum_odd_no.o > disas.txt
 
 ---
 
-### 2. Instruction: `addi sp, sp, -32`
+### 13. Instruction: `lui s0, 0x24`
 
-![RISC-V Instruction 2](screenshots/RISC-V_Instruction_2.png)
+![RISC-V Instruction 13](screenshots/RISC-V_Instruction_13.png)
 
-- **Opcode**: 0010011 (7 bits)
-- **funct3**: 000
-- **rs1 (sp = x2)**: 00010
-- **rd (sp = x2)**: 00010
-- **Immediate (-32)**: 111111111000
+- **Opcode**: 0110111
+- **rd (s0 = x8)**: 01000
+- **Immediate**: 00000000001001000000
 
-**Machine Code**: `fe010113`  
-**Type**: I-type
+**Machine Code**: `00024437`  
+**Type**: U-type
 
 **Bitwise Layout**:  
-`111111111000 00010 000 00010 0010011`
+`00000000001001000000 01000 0110111`
 
 ---
 
-### 3. Instruction: `addi a0, a0, -112`
+### 14. Instruction: `jal ra, 10478`
 
-![RISC-V Instruction 3](screenshots/RISC-V_Instruction_3.png)
-
-- **Opcode**: 0010011
-- **funct3**: 000
-- **rs1 (a0 = x10)**: 01010
-- **rd (a0 = x10)**: 01010
-- **Immediate (-112)**: 111110010000
-
-**Machine Code**: `f9050513`  
-**Type**: I-type
-
-**Bitwise Layout**:  
-`111110010000 01010 000 01010 0010011`
-
----
-
-### 4. Instruction: `sd s0, 16(sp)`
-
-- **Opcode**: 0100011
-- **funct3**: 011
-- **rs1 (sp = x2)**: 00010
-- **rs2 (s0 = x8)**: 01000
-- **Immediate (16)**: imm[11:5]=0000000, imm[4:0]=10000
-
-**Machine Code**: `00813823`  
-**Type**: S-type
-
-**Bitwise Layout**:  
-`0000000 01000 00010 011 10000 0100011`
-
----
-
-### 5. Instruction: `sd s1, 8(sp)`
-
-- **Opcode**: 0100011
-- **funct3**: 011
-- **rs1**: 00010 (sp)
-- **rs2**: 01001 (s1)
-- **Immediate (8)**: imm[11:5]=0000000, imm[4:0]=01000
-
-**Machine Code**: `00913423`  
-**Type**: S-type
-
-**Bitwise Layout**:  
-`0000000 01001 00010 011 01000 0100011`
-
----
-
-### 6. Instruction: `sd s2, 0(sp)`
-
-- **Opcode**: 0100011
-- **funct3**: 011
-- **rs1**: 00010 (sp)
-- **rs2**: 10010 (s2)
-- **Immediate (0)**: 000000000000
-
-**Machine Code**: `01213023`  
-**Type**: S-type
-
-**Bitwise Layout**:  
-`0000000 10010 00010 011 00000 0100011`
-
----
-
-### 7. Instruction: `sd ra, 24(sp)`
-
-- **Opcode**: 0100011
-- **funct3**: 011
-- **rs1**: 00010 (sp)
-- **rs2**: 00001 (ra)
-- **Immediate (24)**: imm[11:5]=0000000, imm[4:0]=11000
-
-**Machine Code**: `00113c23`  
-**Type**: S-type
-
-**Bitwise Layout**:  
-`0000000 00001 00010 011 11000 0100011`
-
----
-
-### 8. Instruction: `li s0, 1` → Pseudo-instruction  
-> Real: `addi s0, x0, 1`
-
-- **Opcode**: 0010011
-- **funct3**: 000
-- **rs1**: 00000 (x0)
-- **rd**: 01000 (s0)
-- **Immediate**: 000000000001
-
-**Machine Code**: `00100413`  
-**Type**: I-type
-
-**Bitwise Layout**:  
-`000000000001 00000 000 01000 0010011`
-
----
-
-### 9. Instruction: `jal ra, 106d0 <puts>`
+![RISC-V Instruction 14](screenshots/RISC-V_Instruction_14.png)
 
 - **Opcode**: 1101111
-- **rd**: 00001 (ra)
-- **Immediate**: 000000000110000000000 (offset format)
+- **rd (ra = x1)**: 00001
+- **Immediate (offset = 3924 / 0xF5C)**: 0011 0101 0100 0000 0000
 
-**Machine Code**: `600000ef`  
+**Machine Code**: `354000ef`  
 **Type**: J-type
 
 **Bitwise Layout**:  
@@ -382,97 +484,19 @@ riscv64-unknown-elf-objdump -d sum_odd_no.o > disas.txt
 
 ---
 
-### 10. Instruction: `lui s2, 0x21`
+### 15. Instruction: `jal ra, 10478` 
 
-- **Opcode**: 0110111
-- **rd (s2 = x18)**: 10010
-- **Immediate**: 00000000001000010000
-
-**Machine Code**: `00021937`  
-**Type**: U-type
-
-**Bitwise Layout**:  
-`00000000001000010000 10010 0110111`
-
----
-
-### 11. Instruction: `li s1, 31` → Pseudo-instruction  
-> Real: `addi s1, x0, 31`
-
-- **Opcode**: 0010011
-- **rd (s1 = x9)**: 01001
-- **rs1**: 00000
-- **Immediate**: 000000011111
-
-**Machine Code**: `01f00493`  
-**Type**: I-type
-
-**Bitwise Layout**:  
-`000000011111 00000 000 01001 0010011`
-
----
-
-### 12. Instruction: `j 100e8` → Pseudo-instruction  
-> Real: `jal x0, offset`
+![RISC-V Instruction 15](screenshots/RISC-V_Instruction_15.png)
 
 - **Opcode**: 1101111
-- **rd**: 00000 (x0)
-- **Immediate**: (offset from PC)
+- **rd (ra = x1)**: 00001
+- **Immediate (offset = 920)**: 0000 0011 1001 1000 0000
 
-**Machine Code**: `00c0006f`  
+**Machine Code**: `398000ef`  
 **Type**: J-type
 
 **Bitwise Layout**:  
-`imm[20|10:1|11|19:12] 00000 1101111`
+`imm[20|10:1|11|19:12] 00001 1101111`
 
 ---
-
-### 13. Instruction: `addiw s0, s0, 1`
-
-- **Opcode**: 0011011
-- **funct3**: 000
-- **rs1 (s0 = x8)**: 01000
-- **rd (s0 = x8)**: 01000
-- **Immediate**: 000000000001
-
-**Machine Code**: `0014041b`  
-**Type**: I-type
-
-**Bitwise Layout**:  
-`000000000001 01000 000 01000 0011011`
-
----
-
-### 14. Instruction: `beq s0, s1, 10104`
-
-- **Opcode**: 1100011
-- **funct3**: 000
-- **rs1 (s0 = x8)**: 01000
-- **rs2 (s1 = x9)**: 01001
-- **Immediate (0x029)**: imm[12|10:5]=0, imm[4:1|11]=1001_0
-
-**Machine Code**: `02940063`  
-**Type**: B-type
-
-**Bitwise Layout**:  
-`imm[12|10:5] 01001 01000 000 imm[4:1|11] 1100011`
-
----
-
-### 15. Instruction: `andi a5, s0, 1`
-
-- **Opcode**: 0010011
-- **funct3**: 111
-- **rs1 (s0 = x8)**: 01000
-- **rd (a5 = x15)**: 01111
-- **Immediate**: 000000000001
-
-**Machine Code**: `00147793`  
-**Type**: I-type
-
-**Bitwise Layout**:  
-`000000000001 01000 111 01111 0010011`
-
----
-
 
