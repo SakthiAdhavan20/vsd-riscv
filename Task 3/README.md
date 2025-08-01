@@ -199,6 +199,8 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 
 ### 3. Instruction: `addi a0, a0, -112`
 
+![RISC-V Instruction 3](screenshots/RISC-V_Instruction_3.png)
+
 - **Opcode**: 0010011
 - **funct3**: 000
 - **rs1 (a0 = x10)**: 01010
