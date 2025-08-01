@@ -160,9 +160,12 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 
 ## RISC-V Instruction Breakdown
 
+![RISC-V Instruction Breakdown](screenshots/RISC-V_Instruction_Breakdown.png)
 ---
 
 ### 1. Instruction: `lui a0, 0x21`
+
+![RISC-V Instruction 1](screenshots/RISC-V_Instruction_1.png)
 
 - **Opcode**: 0110111 (7 bits)
 - **rd (a0 = x10)**: 01010 (5 bits)
@@ -177,6 +180,8 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 ---
 
 ### 2. Instruction: `addi sp, sp, -32`
+
+![RISC-V Instruction 2](screenshots/RISC-V_Instruction_2.png)
 
 - **Opcode**: 0010011 (7 bits)
 - **funct3**: 000
