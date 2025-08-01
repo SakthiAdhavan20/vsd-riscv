@@ -1,78 +1,150 @@
-# sample README FILE.not completed Task3
+## RISC-V Instruction Formats
 
+### 1. Instruction Format Types
 
-# Task 3 – RISC-V Instruction Type and 32-bit Encoding
-
-This task focuses on identifying and decoding 15 unique RISC-V instructions used in a compiled C program. The goal is to classify each instruction by type (R, I, S, B, U, J) and extract the 32-bit binary encoding using the instruction format specification.
-
----
-
-## 📘 Instruction Type Reference
-
-The six main instruction types in RISC-V are:
-
-| Type | Format Fields                                  | Used For                        |
-|------|------------------------------------------------|----------------------------------|
-| R    | `opcode | rd | funct3 | rs1 | rs2 | funct7`    | Register-to-register operations |
-| I    | `opcode | rd | funct3 | rs1 | imm[11:0]`       | Immediate, load, etc.           |
-| S    | `opcode | imm[4:0] | funct3 | rs1 | rs2 | imm[11:5]` | Store instructions         |
-| B    | `opcode | imm[11], imm[4:1], funct3, rs1, rs2, imm[10:5], imm[12]` | Branch |
-| U    | `opcode | rd | imm[31:12]`                     | Upper immediate instructions     |
-| J    | `opcode | rd | imm[20|10:1|11|19:12]`          | Jumps                            |
+| Type   | Purpose                         | Typical Instructions     |
+|--------|----------------------------------|---------------------------|
+| R-type | Register arithmetic              | add, sub, and, sll        |
+| I-type | Immediate arithmetic, loads      | addi, lw, jalr            |
+| S-type | Store to memory                  | sw, sb, sh                |
+| B-type | Conditional branches             | beq, bne, blt             |
+| U-type | Load immediate to upper bits     | lui, auipc                |
+| J-type | Jumps with link                  | jal                       |
 
 ---
 
-## 🔍 Sample Code Used
+### 2. Field Layout by Format
 
-The program analyzed is `odd_no.c`, compiled with `riscv64-unknown-elf-gcc` using both `-O1` and `-Ofast`.
+#### R-Type
 
-Disassembly obtained via:
+| funct7 | rs2 | rs1 | funct3 | rd | opcode |
+|--------|-----|-----|--------|----|--------|
+| 7 bits |  5  |  5  |   3    | 5  |   7    |
 
-```bash
-riscv64-unknown-elf-objdump -d odd_no.o > objdump_output.txt
+Used for register-to-register ALU operations.
+
+#### I-Type
+
+| imm[11:0] | rs1 | funct3 | rd | opcode |
+|-----------|-----|--------|----|--------|
+|  12 bits  |  5  |   3    | 5  |   7    |
+
+Used for immediate arithmetic, loads, jalr, and system instructions.
+
+#### S-Type
+
+| imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode |
+|-----------|-----|-----|--------|----------|--------|
+|   7 bits  |  5  |  5  |   3    |   5      |   7    |
+
+Used for memory store operations.
+
+#### B-Type
+
+| imm[12] | imm[10:5] | rs2 | rs1 | funct3 | imm[4:1] | imm[11] | opcode |
+|---------|-----------|-----|-----|--------|-----------|----------|--------|
+| 1 bit   | 6 bits    | 5   | 5   | 3      | 4 bits    | 1 bit   | 7 bits |
+
+Used for conditional branches.
+
+#### U-Type
+
+| imm[31:12] | rd | opcode |
+|------------|----|--------|
+|  20 bits   | 5  | 7 bits |
+
+Used for upper immediate operations.
+
+#### J-Type
+
+| imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode |
+|---------|-----------|---------|-------------|----|--------|
+| 1 bit   | 10 bits   | 1 bit   | 8 bits      | 5  | 7 bits |
+
+Used for jump and link.
+
+---
+
+### 3. Common Instructions and Encodings
+
+#### Arithmetic (R-Type)
+
+```assembly
+add x1, x2, x3    # Adds x2 + x3 → x1
+```
+
+- opcode: `0110011`  
+- funct3: `000`  
+- funct7: `0000000`
+
+#### Immediate (I-Type)
+
+```assembly
+addi x1, x2, 10   # Adds x2 + 10 → x1
+```
+
+- opcode: `0010011`  
+- funct3: `000`
+
+#### Load/Store
+
+```assembly
+lw x5, 4(x6)      # Load word from x6 + 4 (I-type)
+sw x5, 8(x6)      # Store x5 at x6 + 8 (S-type)
+```
+
+#### Branch
+
+```assembly
+beq x1, x2, offset  # Branch if equal
+```
+
+#### Upper Immediate
+
+```assembly
+lui x3, 0x10000     # Sets upper 20 bits of x3
+auipc x4, 0x20000   # PC-relative address generation
+```
+
+#### Jump
+
+```assembly
+jal x1, offset      # Jump to offset, store return address in x1
 ```
 
 ---
 
-## 📄 15 Unique Instructions and Their 32-bit Encodings
+### 4. Instruction Field Extraction (in C/C++)
 
-| #  | Assembly Instruction | Instruction Type | 32-bit Hex | 32-bit Binary | Fields Decoded |
-|----|----------------------|------------------|------------|----------------|----------------|
-| 1  | `addi sp, sp, -32`   | I                | `0xfe010113` | `11111110000000010000000100010011` | opcode: 0010011, funct3: 000, ... |
-| 2  | `sd ra, 24(sp)`      | S                | `0x00113c23` | `00000000000100010011110000100011` | opcode: 0100011, funct3: 011, ... |
-| 3  | `sd s0, 16(sp)`      | S                | ...        | ...            | ...            |
-| .. | ...                  | ...              | ...        | ...            | ...            |
-| 15 | `ret`                | I (alias for `jalr`) | `0x00008067` | `00000000000000000000000001100111` | opcode: 1100111 |
+#### Immediate Extraction (I-Type)
 
-> ⚠️ All values must be taken directly from your `odd_no.o` binary. Use your own instruction addresses and encodings. You may use an online RISC-V disassembler or decode manually using the ISA spec.
-
----
-
-## 🖼️ (Optional) Screenshots
-
-Include any reference images here if desired:
-
-```
-screenshots/objdump_extract.png
-screenshots/encoding_notes.png
+```c
+uint32_t imm_i = (instruction >> 20) & 0xFFF;
 ```
 
-Example:
-![Objdump Output](screenshots/objdump_extract.png)
+#### U-Type Immediate
+
+```c
+uint32_t imm_u = instruction & 0xFFFFF000;
+```
+
+#### B-Type Immediate (Reassembled from fields)
+
+```c
+imm = ((instruction >> 31) & 0x1) << 12 |
+      ((instruction >> 25) & 0x3F) << 5 |
+      ((instruction >> 8) & 0xF) << 1 |
+      ((instruction >> 7) & 0x1) << 11;
+```
 
 ---
 
-## 📚 Observations
+### 5. Optional Extensions in RV32I
 
-- Most of the load/store instructions fall into **S-type**
-- Control flow instructions like `beq`, `bne` are **B-type**
-- Arithmetic instructions like `addi`, `addiw`, `andi` are **I-type**
-- Understanding how bits are split into fields helps in pipeline design and decoding logic
-
----
-
-## ✅ Conclusion
-
-This task helped deepen understanding of how RISC-V assembly instructions are encoded in 32-bit binary format and how instruction types impact control logic in a RISC-V processor.
-
-
+| Extension | Description                    | Example Instructions       |
+|-----------|--------------------------------|-----------------------------|
+| M         | Integer Multiply/Divide        | mul, div, rem               |
+| A         | Atomics                        | lr.w, sc.w                  |
+| F/D/Q     | Floating-Point (32/64/128-bit) | flw, fsd                    |
+| C         | Compressed (16-bit)            | c.addi, c.sw, c.jal         |
+| Zicsr     | CSR Access/Manipulation        | csrrw, csrrs, csrrc         |
