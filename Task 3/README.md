@@ -158,6 +158,35 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 | Zicsr     | CSR Access/Manipulation        | csrrw, csrrs, csrrc         |
 
 
+## Source C Code
+
+The following C code was compiled using the RISC-V GCC toolchain to generate ELF and disassembly for instruction decoding.
+
+```c
+#include <stdio.h>
+
+int arr[15];
+
+int main() {
+    int i, sum = 0;
+
+    for(i = 0; i < 15; i++) {
+        arr[i] = 2 * i + 1;
+    }
+
+    for(i = 0; i < 15; i++) {
+        if (arr[i] % 2 != 0) {
+            printf("%d ", arr[i]);
+            sum += arr[i];
+        }
+    }
+
+    printf("\nSum = %d\n", sum);
+
+    return 0;
+}
+
+
 ## RISC-V Instruction Breakdown
 
 ![RISC-V Instruction Breakdown](screenshots/RISC-V_Instruction_Breakdown.png)
