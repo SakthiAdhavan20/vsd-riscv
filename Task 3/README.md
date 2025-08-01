@@ -162,6 +162,8 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 
 The following C code was compiled using the RISC-V GCC toolchain to generate ELF and disassembly for instruction decoding.
 
+---
+
 ```c
 #include <stdio.h>
 
@@ -185,6 +187,7 @@ int main() {
 
     return 0;
 }
+```
 
 ---
 
