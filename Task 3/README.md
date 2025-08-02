@@ -85,6 +85,16 @@ Used for memory store operations.
 - `opcode`: 0100011  
 - Immediate split: high 7 bits [31:25], low 5 bits [11:7]
 
+**C extraction:**
+```c
+int32_t imm_s = ((instruction >> 25) & 0x7F) << 5 |
+                (instruction >> 7) & 0x1F;
+
+// Sign extension
+if (imm_s & 0x800)
+    imm_s |= 0xFFFFF000;
+```
+
 ### B-Type (Branch Instructions)
 
 Used for conditional branches.
@@ -104,10 +114,14 @@ Note: The final immediate is sign-extended and left-shifted by 1 (`imm <<= 1`) t
 
 **C extraction:**
 ```c
-imm = ((instruction >> 31) & 0x1) << 12 |
-      ((instruction >> 25) & 0x3F) << 5 |
-      ((instruction >> 8) & 0xF) << 1 |
-      ((instruction >> 7) & 0x1) << 11;
+int32_t imm_b = ((instruction >> 31) & 0x1) << 12 |
+                ((instruction >> 25) & 0x3F) << 5 |
+                ((instruction >> 8) & 0xF) << 1 |
+                ((instruction >> 7) & 0x1) << 11;
+
+// Sign extension
+if (imm_b & 0x1000)
+    imm_b |= 0xFFFFE000;
 ```
 
 ### U-Type (Upper Immediate)
