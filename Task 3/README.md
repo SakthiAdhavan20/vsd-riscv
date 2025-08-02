@@ -43,10 +43,6 @@ Used for register-to-register ALU operations.
 | Bits    | 7      | 5   | 5   | 3      | 5   | 7      |
 | Range   | 31–25  |24–20|19–15|14–12   |11–7 |6–0     |
 
-
-
-
-
 **Example:** `add x1, x2, x3`  
 - `opcode`: 0110011  
 - `funct3`: 000  
@@ -68,7 +64,10 @@ Used for immediate arithmetic, loads, and some control instructions.
 
 **C extraction:**
 ```c
-uint32_t imm_i = (instruction >> 20) & 0xFFF;
+int32_t imm_i = ((int32_t)instruction) >> 20;
+```
+```c
+uint32_t imm_i_unsigned = (instruction >> 20) & 0xFFF;
 ```
 
 ### S-Type (Store Instructions)
@@ -99,6 +98,9 @@ Used for conditional branches.
 **Example:** `beq x1, x2, offset`  
 - Branches if `x1 == x2`  
 - `opcode`: 1100011
+
+Note: The final immediate is sign-extended and left-shifted by 1 (`imm <<= 1`) to get byte offset.
+
 
 **C extraction:**
 ```c
@@ -140,6 +142,20 @@ Used for unconditional jumps with link.
 **Example:** `jal x1, offset`  
 - Jumps to `PC + offset`, stores return address in `x1`  
 - `opcode`: 1101111
+
+Note: The final immediate is sign-extended and left-shifted by 1 to get the jump offset.
+
+**C extraction:**
+```c
+int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |
+                ((instruction >> 21) & 0x3FF) << 1 |
+                ((instruction >> 20) & 0x1) << 11 |
+                ((instruction >> 12) & 0xFF) << 12;
+
+// Sign extension
+if (imm_j & 0x100000)
+    imm_j |= 0xFFE00000;
+```
 
 ## 4. Instruction Behavior Examples
 
