@@ -38,10 +38,9 @@ Each type has a unique layout of fields and is used based on the instruction's b
 
 Used for register-to-register ALU operations.
 
-```
-| funct7 | rs2  | rs1  | funct3 | rd   | opcode |
-| 7 bits | 5    | 5    | 3      | 5    | 7      |
-```
+  31      25 24    20 19    15 14    12 11     7 6      0
+| funct7  | rs2   | rs1   | funct3 | rd    | opcode |
+
 
 **Example:** `add x1, x2, x3`  
 - `opcode`: 0110011  
