@@ -58,6 +58,8 @@ int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |
 if (imm_j & 0x100000)
     imm_j |= 0xFFE00000;
 ```
+Note: R-type instructions operate purely on registers and do not include an immediate field.
+
 ### I-Type (Immediate, Load)
 
 Used for immediate arithmetic, loads, and some control instructions.
@@ -78,6 +80,8 @@ int32_t imm_i = ((int32_t)instruction) >> 20;
 
 uint32_t imm_i_unsigned = (instruction >> 20) & 0xFFF;
 ```
+
+Note: The 12-bit immediate in I-type instructions is sign-extended to 32 bits during execution.
 
 ### S-Type (Store Instructions)
 
