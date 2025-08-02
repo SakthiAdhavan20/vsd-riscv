@@ -38,10 +38,9 @@ Each type has a unique layout of fields and is used based on the instruction's b
 
 Used for register-to-register ALU operations.
 
-  31     25 24    20 19    15 14    12 11     7 6      0
-+--------+-------+-------+--------+-------+--------+
-| funct7 | rs2   | rs1   | funct3 | rd    | opcode |
-+--------+-------+-------+--------+-------+--------+
+  31     25 24     20 19     15 14     12 11      7 6       0
+ | funct7 | rs2   | rs1   | funct3 |   rd   |  opcode |
+
 
 
 
