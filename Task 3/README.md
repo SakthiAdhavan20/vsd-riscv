@@ -50,13 +50,12 @@ Used for register-to-register ALU operations.
 
 **C extraction:**
 ```c
-int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |
-                ((instruction >> 21) & 0x3FF) << 1 |
-                ((instruction >> 20) & 0x1) << 11 |
-                ((instruction >> 12) & 0xFF) << 12;
+uint32_t rd     = (instruction >> 7)  & 0x1F;
+uint32_t funct3 = (instruction >> 12) & 0x07;
+uint32_t rs1    = (instruction >> 15) & 0x1F;
+uint32_t rs2    = (instruction >> 20) & 0x1F;
+uint32_t funct7 = (instruction >> 25) & 0x7F;
 
-if (imm_j & 0x100000)
-    imm_j |= 0xFFE00000;
 ```
 Note: R-type instructions operate purely on registers and do not include an immediate field.
 
@@ -100,8 +99,8 @@ Used for memory store operations.
 
 **C extraction:**
 ```c
-int32_t imm_s = ((instruction >> 25) & 0x7F) << 5 |
-                (instruction >> 7) & 0x1F;
+int32_t imm_s = ((instruction >> 25) & 0x7F) << 5 |    // imm[11:5]
+                (instruction >> 7) & 0x1F;             // imm[4:0]
 
 // Sign extension
 if (imm_s & 0x800)
@@ -129,10 +128,10 @@ These bits are combined and shifted to form the final 13-bit signed immediate.
 
 **C extraction:**
 ```c
-int32_t imm_b = ((instruction >> 31) & 0x1) << 12 |
-                ((instruction >> 25) & 0x3F) << 5 |
-                ((instruction >> 8) & 0xF) << 1 |
-                ((instruction >> 7) & 0x1) << 11;
+int32_t imm_b = ((instruction >> 31) & 0x1) << 12 |    // imm[12]
+                ((instruction >> 25) & 0x3F) << 5 |    // imm[10:5]
+                ((instruction >> 8) & 0xF) << 1 |      // imm[4:1]
+                ((instruction >> 7) & 0x1) << 11;      // imm[11]
 
 // Sign extension
 if (imm_b & 0x1000)
@@ -157,7 +156,7 @@ Note: The U-type immediate occupies bits [31:12] and is always left-shifted by 1
 
 **C extraction:**
 ```c
-uint32_t imm_u = instruction & 0xFFFFF000;
+uint32_t imm_u = instruction & 0xFFFFF000;   // imm[31:12] << 12
 ```
 
 ### J-Type (Jump and Link)
@@ -174,14 +173,15 @@ Used for unconditional jumps with link.
 - Jumps to `PC + offset`, stores return address in `x1`  
 - `opcode`: 1101111
 
-Note: The final immediate is sign-extended and left-shifted by 1 to get the jump offset.
+Note: The immediate field is non-contiguous and must be assembled in the order [20|10:1|11|19:12]. After combining, it is sign-extended and left-shifted by 1 to get the final jump offset.
 
 **C extraction:**
 ```c
-int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |
-                ((instruction >> 21) & 0x3FF) << 1 |
-                ((instruction >> 20) & 0x1) << 11 |
-                ((instruction >> 12) & 0xFF) << 12;
+// J-type immediate assembly from instruction
+int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |     // imm[20]
+                ((instruction >> 21) & 0x3FF) << 1 |    // imm[10:1]
+                ((instruction >> 20) & 0x1) << 11 |     // imm[11]
+                ((instruction >> 12) & 0xFF) << 12;     // imm[19:12]
 
 // Sign extension
 if (imm_j & 0x100000)
