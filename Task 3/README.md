@@ -48,6 +48,16 @@ Used for register-to-register ALU operations.
 - `funct3`: 000  
 - `funct7`: 0000000
 
+**C extraction:**
+```c
+int32_t imm_j = ((instruction >> 31) & 0x1) << 20 |
+                ((instruction >> 21) & 0x3FF) << 1 |
+                ((instruction >> 20) & 0x1) << 11 |
+                ((instruction >> 12) & 0xFF) << 12;
+
+if (imm_j & 0x100000)
+    imm_j |= 0xFFE00000;
+```
 ### I-Type (Immediate, Load)
 
 Used for immediate arithmetic, loads, and some control instructions.
@@ -65,8 +75,7 @@ Used for immediate arithmetic, loads, and some control instructions.
 **C extraction:**
 ```c
 int32_t imm_i = ((int32_t)instruction) >> 20;
-```
-```c
+
 uint32_t imm_i_unsigned = (instruction >> 20) & 0xFFF;
 ```
 
@@ -109,8 +118,10 @@ Used for conditional branches.
 - Branches if `x1 == x2`  
 - `opcode`: 1100011
 
-Note: The final immediate is sign-extended and left-shifted by 1 (`imm <<= 1`) to get byte offset.
-
+Note: The immediate field in B-type instructions is split and reordered across non-contiguous bit positions. Be careful when extracting `imm`:
+- `imm[12]` (bit 31), `imm[10:5]` (bits 30–25)
+- `imm[4:1]` (bits 11–8), `imm[11]` (bit 7)
+These bits are combined and shifted to form the final 13-bit signed immediate.
 
 **C extraction:**
 ```c
@@ -137,6 +148,8 @@ Used to load a 20-bit immediate to upper bits.
 **Example:** `lui x5, 0x12345`  
 - Loads `0x12345 << 12` into `x5`  
 - `opcode`: 0110111
+
+Note: The U-type immediate occupies bits [31:12] and is always left-shifted by 12 bits when used. There is no need for sign extension because the lower 12 bits are assumed to be zero.
 
 **C extraction:**
 ```c
