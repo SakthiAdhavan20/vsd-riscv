@@ -56,12 +56,13 @@ Used for register-to-register ALU operations.
 
 Used for immediate arithmetic, loads, and some control instructions.
 
-| imm[11:0] | rs1 | funct3 | rd | opcode |
-|-----------|-----|--------|----|--------|
-|  12 bits  |  5  |   3    | 5  |   7    |
+| Field   | imm[11:0]  | rs1 | funct3 | rd  | opcode |
+|---------|------------|-----|--------|-----|--------|
+| Bits    | 12         | 5   | 3      | 5   | 7      |
+| Range   | 31–20      |19–15|14–12   |11–7 |6–0     |
 
-**Example:** `addi x1, x2, 10`  
-- Adds 10 to `x2` and stores in `x1`  
+**Example:** `addi x1, x2, 10` 
+- Adds 10 to `x2` and stores in `x1` 
 - `opcode`: 0010011  
 - Immediate is in bits [31:20]
 
@@ -74,9 +75,11 @@ uint32_t imm_i = (instruction >> 20) & 0xFFF;
 
 Used for memory store operations.
 
-| imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode |
-|-----------|-----|-----|--------|----------|--------|
-|   7 bits  |  5  |  5  |   3    |   5      |   7    |
+| Field   | imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode |
+|---------|-----------|-----|-----|--------|----------|--------|
+| Bits    | 7         | 5   | 5   | 3      | 5        | 7      |
+| Range   | 31–25     |24–20|19–15|14–12   |11–7      |6–0     |
+
 
 **Example:** `sw x5, 8(x6)`  
 - Stores `x5` at memory address `x6 + 8`  
@@ -87,9 +90,11 @@ Used for memory store operations.
 
 Used for conditional branches.
 
-| imm[12] | imm[10:5] | rs2 | rs1 | funct3 | imm[4:1] | imm[11] | opcode |
-|---------|-----------|-----|-----|--------|-----------|----------|--------|
-| 1 bit   | 6 bits    | 5   | 5   | 3      | 4 bits    | 1 bit   | 7 bits |
+| Field   | imm[12] | imm[10:5] | rs2 | rs1 | funct3 | imm[4:1] | imm[11] | opcode |
+|---------|---------|-----------|-----|-----|--------|-----------|----------|--------|
+| Bits    | 1       | 6         | 5   | 5   | 3      | 4         | 1        | 7      |
+| Range   | 31      | 30–25     |24–20|19–15|14–12   |11–8       |7         |6–0     |
+
 
 **Example:** `beq x1, x2, offset`  
 - Branches if `x1 == x2`  
@@ -107,9 +112,11 @@ imm = ((instruction >> 31) & 0x1) << 12 |
 
 Used to load a 20-bit immediate to upper bits.
 
-| imm[31:12] | rd | opcode |
-|------------|----|--------|
-|  20 bits   | 5  | 7 bits |
+| Field   | imm[31:12]          | rd  | opcode |
+|---------|---------------------|-----|--------|
+| Bits    | 20                  | 5   | 7      |
+| Range   | 31–12               |11–7 |6–0     |
+
 
 **Example:** `lui x5, 0x12345`  
 - Loads `0x12345 << 12` into `x5`  
@@ -124,9 +131,11 @@ uint32_t imm_u = instruction & 0xFFFFF000;
 
 Used for unconditional jumps with link.
 
-| imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode |
-|---------|-----------|---------|-------------|----|--------|
-| 1 bit   | 10 bits   | 1 bit   | 8 bits      | 5  | 7 bits |
+| Field   | imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd  | opcode |
+|---------|---------|-----------|----------|-------------|-----|--------|
+| Bits    | 1       | 10        | 1        | 8           | 5   | 7      |
+| Range   | 31      | 30–21     | 20       | 19–12       |11–7 |6–0     |
+
 
 **Example:** `jal x1, offset`  
 - Jumps to `PC + offset`, stores return address in `x1`  
