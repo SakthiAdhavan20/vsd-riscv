@@ -3,141 +3,98 @@
 This task involves identifying and decoding 15 unique RISC-V instructions from a compiled ELF binary. Each instruction is disassembled, and its format is analyzed based on the RISC-V specification. This includes determining the instruction type (R/I/S/B/U/J), extracting fields such as opcode, funct3, rs1, rs2, rd, and immediate values, and representing the 32-bit instruction layout.
 
 
-## RISC-V Instruction Formats
+## 1. Instruction Format Types
 
-### 1. Instruction Format Types
+RISC-V instructions are categorized into six standard types, each designed for different purposes based on how they organize fields like registers, opcodes, and immediate values.
 
-| Type   | Purpose                         | Typical Instructions     |
-|--------|----------------------------------|---------------------------|
-| R-type | Register arithmetic              | add, sub, and, sll        |
-| I-type | Immediate arithmetic, loads      | addi, lw, jalr            |
-| S-type | Store to memory                  | sw, sb, sh                |
-| B-type | Conditional branches             | beq, bne, blt             |
-| U-type | Load immediate to upper bits     | lui, auipc                |
-| J-type | Jumps with link                  | jal                       |
+| Type   | Purpose                         | Example Instructions      |
+|--------|----------------------------------|----------------------------|
+| R-type | Register arithmetic             | `add`, `sub`, `and`, `sll` |
+| I-type | Immediate arithmetic, loads     | `addi`, `lw`, `jalr`       |
+| S-type | Store to memory                 | `sw`, `sh`, `sb`           |
+| B-type | Conditional branches            | `beq`, `bne`, `blt`        |
+| U-type | Load upper immediate            | `lui`, `auipc`             |
+| J-type | Jump and link                   | `jal`                      |
 
----
+Each type has a unique layout of fields and is used based on the instruction's behavior and operands.
 
-### 2. Field Layout by Format
+## 2. Common Instruction Fields
 
-![RISC-V Instruction Formats](screenshots/RISC-V_Instruction_Formats.png)
+| Field    | Description                                         |
+|----------|-----------------------------------------------------|
+| `opcode` | Identifies instruction type (e.g., `0110011` for R) |
+| `rd`     | Destination register                                |
+| `rs1`    | First source register                               |
+| `rs2`    | Second source register                              |
+| `funct3` | Specifies operation (along with opcode)             |
+| `funct7` | Further refines operation (in R-type)               |
+| `imm`    | Immediate constant value                            |
 
+## 3. Instruction Format Layouts
 
-#### R-Type
+![RISC-V_Instruction_Formats](screenshots/RISC-V_Instruction_Formats.png)
 
-| funct7 | rs2 | rs1 | funct3 | rd | opcode |
-|--------|-----|-----|--------|----|--------|
-| 7 bits |  5  |  5  |   3    | 5  |   7    |
+### R-Type (Register Operations)
 
 Used for register-to-register ALU operations.
 
-#### I-Type
-
-| imm[11:0] | rs1 | funct3 | rd | opcode |
-|-----------|-----|--------|----|--------|
-|  12 bits  |  5  |   3    | 5  |   7    |
-
-Used for immediate arithmetic, loads, jalr, and system instructions.
-
-#### S-Type
-
-| imm[11:5] | rs2 | rs1 | funct3 | imm[4:0] | opcode |
-|-----------|-----|-----|--------|----------|--------|
-|   7 bits  |  5  |  5  |   3    |   5      |   7    |
-
-Used for memory store operations.
-
-#### B-Type
-
-| imm[12] | imm[10:5] | rs2 | rs1 | funct3 | imm[4:1] | imm[11] | opcode |
-|---------|-----------|-----|-----|--------|-----------|----------|--------|
-| 1 bit   | 6 bits    | 5   | 5   | 3      | 4 bits    | 1 bit   | 7 bits |
-
-Used for conditional branches.
-
-#### U-Type
-
-| imm[31:12] | rd | opcode |
-|------------|----|--------|
-|  20 bits   | 5  | 7 bits |
-
-Used for upper immediate operations.
-
-#### J-Type
-
-| imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd | opcode |
-|---------|-----------|---------|-------------|----|--------|
-| 1 bit   | 10 bits   | 1 bit   | 8 bits      | 5  | 7 bits |
-
-Used for jump and link.
-
----
-
-### 3. Common Instructions and Encodings
-
-#### Arithmetic (R-Type)
-
-```assembly
-add x1, x2, x3    # Adds x2 + x3 → x1
+```
+| funct7 | rs2  | rs1  | funct3 | rd   | opcode |
+| 7 bits | 5    | 5    | 3      | 5    | 7      |
 ```
 
-- opcode: `0110011`  
-- funct3: `000`  
-- funct7: `0000000`
+**Example:** `add x1, x2, x3`  
+- `opcode`: 0110011  
+- `funct3`: 000  
+- `funct7`: 0000000
 
-#### Immediate (I-Type)
+### I-Type (Immediate, Load)
 
-```assembly
-addi x1, x2, 10   # Adds x2 + 10 → x1
+Used for immediate arithmetic, loads, and some control instructions.
+
+```
+| imm[11:0]    | rs1  | funct3 | rd   | opcode |
+| 12 bits      | 5    | 3      | 5    | 7      |
 ```
 
-- opcode: `0010011`  
-- funct3: `000`
+**Example:** `addi x1, x2, 10`  
+- Adds 10 to `x2` and stores in `x1`  
+- `opcode`: 0010011  
+- Immediate is in bits [31:20]
 
-#### Load/Store
-
-```assembly
-lw x5, 4(x6)      # Load word from x6 + 4 (I-type)
-sw x5, 8(x6)      # Store x5 at x6 + 8 (S-type)
-```
-
-#### Branch
-
-```assembly
-beq x1, x2, offset  # Branch if equal
-```
-
-#### Upper Immediate
-
-```assembly
-lui x3, 0x10000     # Sets upper 20 bits of x3
-auipc x4, 0x20000   # PC-relative address generation
-```
-
-#### Jump
-
-```assembly
-jal x1, offset      # Jump to offset, store return address in x1
-```
-
----
-
-### 4. Instruction Field Extraction (in C/C++)
-
-#### Immediate Extraction (I-Type)
-
+**C extraction:**
 ```c
 uint32_t imm_i = (instruction >> 20) & 0xFFF;
 ```
 
-#### U-Type Immediate
+### S-Type (Store Instructions)
 
-```c
-uint32_t imm_u = instruction & 0xFFFFF000;
+Used for memory store operations.
+
+```
+| imm[11:5] | rs2  | rs1  | funct3 | imm[4:0] | opcode |
+| 7 bits    | 5    | 5    | 3      | 5        | 7      |
 ```
 
-#### B-Type Immediate (Reassembled from fields)
+**Example:** `sw x5, 8(x6)`  
+- Stores `x5` at memory address `x6 + 8`  
+- `opcode`: 0100011  
+- Immediate split: high 7 bits [31:25], low 5 bits [11:7]
 
+### B-Type (Branch Instructions)
+
+Used for conditional branches.
+
+```
+| imm[12] | imm[10:5] | rs2 | rs1 | funct3 | imm[4:1] | imm[11] | opcode |
+| 1 bit   | 6 bits    | 5   | 5   | 3      | 4 bits   | 1 bit   | 7      |
+```
+
+**Example:** `beq x1, x2, offset`  
+- Branches if `x1 == x2`  
+- `opcode`: 1100011
+
+**C extraction:**
 ```c
 imm = ((instruction >> 31) & 0x1) << 12 |
       ((instruction >> 25) & 0x3F) << 5 |
@@ -145,17 +102,60 @@ imm = ((instruction >> 31) & 0x1) << 12 |
       ((instruction >> 7) & 0x1) << 11;
 ```
 
----
+### U-Type (Upper Immediate)
 
-### 5. Optional Extensions in RV32I
+Used to load a 20-bit immediate to upper bits.
 
-| Extension | Description                    | Example Instructions       |
-|-----------|--------------------------------|-----------------------------|
-| M         | Integer Multiply/Divide        | mul, div, rem               |
-| A         | Atomics                        | lr.w, sc.w                  |
-| F/D/Q     | Floating-Point (32/64/128-bit) | flw, fsd                    |
-| C         | Compressed (16-bit)            | c.addi, c.sw, c.jal         |
-| Zicsr     | CSR Access/Manipulation        | csrrw, csrrs, csrrc         |
+```
+| imm[31:12]            | rd   | opcode |
+| 20 bits               | 5    | 7      |
+```
+
+**Example:** `lui x5, 0x12345`  
+- Loads `0x12345 << 12` into `x5`  
+- `opcode`: 0110111
+
+**C extraction:**
+```c
+uint32_t imm_u = instruction & 0xFFFFF000;
+```
+
+### J-Type (Jump and Link)
+
+Used for unconditional jumps with link.
+
+```
+| imm[20] | imm[10:1] | imm[11] | imm[19:12] | rd   | opcode |
+| 1 bit   | 10 bits   | 1 bit   | 8 bits     | 5    | 7      |
+```
+
+**Example:** `jal x1, offset`  
+- Jumps to `PC + offset`, stores return address in `x1`  
+- `opcode`: 1101111
+
+## 4. Instruction Behavior Examples
+
+| Instruction       | Format | Operation Description                        |
+|-------------------|--------|----------------------------------------------|
+| `add x1, x2, x3`  | R-type | Adds `x2 + x3 → x1`                          |
+| `addi x1, x2, 10` | I-type | Adds `x2 + 10 → x1`                          |
+| `lw x5, 4(x6)`    | I-type | Loads memory at `x6 + 4` → `x5`              |
+| `sw x5, 8(x6)`    | S-type | Stores `x5` at `x6 + 8`                      |
+| `beq x1, x2, off` | B-type | Branches if `x1 == x2`                       |
+| `lui x3, 0x10000` | U-type | Loads `0x10000 << 12` into `x3`              |
+| `jal x1, offset`  | J-type | Jumps to address, stores return addr in `x1` |
+
+## 5. Optional RV32I Extensions
+
+RISC-V is modular. The following extensions enhance RV32I with more operations:
+
+| Extension | Description                        | Example Instructions     |
+|-----------|------------------------------------|--------------------------|
+| M         | Integer multiply/divide            | `mul`, `div`, `rem`      |
+| A         | Atomic instructions                | `lr.w`, `sc.w`           |
+| F/D/Q     | Floating-point (32/64/128-bit)     | `flw`, `fsd`, `fmadd.d`  |
+| C         | Compressed 16-bit instructions     | `c.addi`, `c.sw`, `c.jal`|
+| Zicsr     | CSR access and manipulation        | `csrrw`, `csrrc`         |
 
 
 ## Source C Code
