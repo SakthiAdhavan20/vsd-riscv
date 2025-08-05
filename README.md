@@ -32,7 +32,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 ## ✅ Completed Tasks
 
 <details>
-<summary><strong>Task 1 – Tool Installation (Click to Expand)</strong></summary>
+<summary><strong>Task 1 – Tool Installation </strong></summary>
 
 <br>
 
@@ -44,7 +44,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 
 
 <details>
-<summary><strong>Task 2 – RISC-V Assembly & Spike Debugging (Click to Expand)</strong></summary>
+<summary><strong>Task 2 – RISC-V Assembly & Spike Debugging </strong></summary>
 
 <br>
 
@@ -54,7 +54,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 
 
 <details>
-<summary><strong>Task 3 – RISC-V Instruction Format (Click to Expand)</strong></summary>
+<summary><strong>Task 3 – RISC-V Instruction Format </strong></summary>
 
 <br>
 
