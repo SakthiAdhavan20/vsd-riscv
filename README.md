@@ -62,6 +62,14 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 
 </details>
 
+<details>
+<summary><strong>Task 4 – Functional Simulation of RISC-V Core </strong></summary>
+
+<br>
+
+➡️ [Task 4 – Functional Simulation of RISC-V Core](Task%204/README.md)
+
+</details>
 
 ---
 
