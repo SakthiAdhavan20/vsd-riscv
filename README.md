@@ -23,7 +23,7 @@ This internship offers practical exposure to RISC-V architecture, toolchain setu
 |Task 1| Tool Installation (Ubuntu, Toolchain, GTKWave, etc.) | ✅ Completed |
 |Task 2| RISC-V Assembly and Spike Debugging (Odd Numbers Program) | ✅ Completed |
 |Task 3| RISC-V Instruction Format and 32-bit Encoding | ✅ Completed |
-|Task 4| Spike Simulation and Debugging | ⏳ In Progress |
+|Task 4| Functional Simulation of RISC-V Core | ⏳ In Progress |
 |Task 5| Functional Simulation of RISC-V Netlist | ⏳ In Progress |
 |Task 6| Build and Upload to VSDSquadron Mini | ⏳ In Progress |
 
