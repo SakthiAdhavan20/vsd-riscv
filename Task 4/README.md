@@ -30,8 +30,6 @@ View the simulation waveform in GTKWave
 
 GTKWave will open and display the waveform window.
 
-![RISC-V Instruction wave](screenshots/RISC-V_Instruction_wave_form.png)
-
 Important note on encodings
 
 All the instructions in the provided Verilog are hard-coded.
@@ -262,6 +260,8 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 
 
 ### Execution & Output Summary (0–120 s)
+
+![RISC-V Instruction wave](screenshots/RISC-V_Instruction_wave_form.png)
 
 | Time (s)  | Event / Signal Change |
 |-----------|-----------------------|
