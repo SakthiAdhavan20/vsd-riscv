@@ -12,7 +12,7 @@ The reference GitHub repository is: **iiitb_rv32i**
 1) **Create a new directory with your name**
 ```bash
 mkdir <your_name>
-
+```
     Create two files using the touch command
 
 touch netlist.v netlist_tb.v
