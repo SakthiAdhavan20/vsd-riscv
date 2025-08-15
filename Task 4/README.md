@@ -29,13 +29,15 @@ View the simulation waveform in GTKWave
 	gtkwave iiitb_rv32i.vcd
 
 GTKWave will open and display the waveform window.
-
+![RISC-V Instruction wave](screenshots/RISC-V_Instruction_wave_form_empty.png)
 Important note on encodings
 
 All the instructions in the provided Verilog are hard-coded.
 Hard-coded means that instead of following the standard RISC-V bit patterns, the designer directly assigned 32-bit values.
 Therefore, the 32-bit instructions generated in Task-2 will not match these hard-coded words.
 Instructions – Standard vs Hardcoded (used in this core).
+
+![RISC-V Instruction](screenshots/RISC-V_Instruction.png)
 
 | MEM Address | Machine Code | Instruction        | Comment               |
 |------------|--------------|------------------|----------------------|
