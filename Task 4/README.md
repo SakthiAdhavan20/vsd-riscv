@@ -30,6 +30,8 @@ View the simulation waveform in GTKWave
 
 GTKWave will open and display the waveform window.
 
+![RISC-V Instruction wave](screenshots/RISC-V_Instruction_wave_form.png)
+
 Important note on encodings
 
 All the instructions in the provided Verilog are hard-coded.
