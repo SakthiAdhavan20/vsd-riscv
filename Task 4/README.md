@@ -1,4 +1,4 @@
-# Task 4 – Functional Simulation of RISC-V
+# Task 4 – Functional Simulation of RISC-V Core
 
 By making use of **RISC-V Core: Verilog Netlist and Testbench**, perform an experiment of **Functional Simulation** and observe the waveforms.
 
