@@ -13,22 +13,22 @@ The reference GitHub repository is: **iiitb_rv32i**
 ```bash
 mkdir <your_name>
 ```
-    Create two files using the touch command
+Create two files using the touch command
 
-touch netlist.v netlist_tb.v
+	touch netlist.v netlist_tb.v
 
-    Copy the code from the reference GitHub repo and paste it into your netlist.v and netlist_tb.v files.
+Copy the code from the reference GitHub repo and paste it into your netlist.v and netlist_tb.v files.
 
-    Run and simulate the Verilog code
+Run and simulate the Verilog code
 
-iverilog -o netlist netlist.v netlist_tb.v
-./netlist
+	iverilog -o netlist netlist.v netlist_tb.v
+	./netlist
 
-    View the simulation waveform in GTKWave
+View the simulation waveform in GTKWave
 
-gtkwave netlist.vcd
+	gtkwave netlist.vcd
 
-    GTKWave will open and display the waveform window.
+GTKWave will open and display the waveform window.
 
 Important note on encodings
 
