@@ -51,9 +51,9 @@ Instructions – Standard vs Hardcoded (used in this core).
 | 9          | 32'h00f00002 | beq r0, r0, 15   | i10                  |
 | 25         | 32'h00210700 | add r14, r2, r2  | i11                  |
 
-    Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/funct3/rs1/rs2/funct7) so the intent is clear, while the Machine Code line shows the hardcoded 32-bit word actually used in this core (from netlist_tb.v)
+Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/funct3/rs1/rs2/funct7) so the intent is clear, while the Machine Code line shows the hardcoded 32-bit word actually used in this core (from netlist_tb.v)
 
-## RISC-V Instruction Breakdown (based on netlist_tb.v)
+## RISC-V Instruction Breakdown
 
 ### 1. Instruction: add r6, r1, r2
 **RISC-V Instruction 1**
