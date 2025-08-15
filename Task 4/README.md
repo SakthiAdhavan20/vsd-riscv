@@ -35,19 +35,21 @@ Important note on encodings
 All the instructions in the provided Verilog are hard-coded.
 Hard-coded means that instead of following the standard RISC-V bit patterns, the designer directly assigned 32-bit values.
 Therefore, the 32-bit instructions generated in Task-2 will not match these hard-coded words.
-Instructions – Standard vs Hardcoded (used in this core)
-Operation	Standard RISC-V ISA (ref)	Hardcoded ISA (used)
-ADD r6, r1, r2	32'h00110333	32'h02208300
-SUB r7, r1, r2	32'h402083b3	32'h02209380
-AND r8, r1, r3	32'h0030f433	32'h0230a400
-OR r9, r2, r5	32'h005164b3	32'h02513480
-XOR r10, r1, r4	32'h0040c533	32'h0240c500
-SLT r11, r2, r4	32'h0045a0b3	32'h02415580
-ADDI r12, r4, 5	—	32'h00520600
-SW r3, r1, 2	32'h0030a123	32'h00209181
-LW r13, r1, 2	32'h0020a683	32'h00208681
-BEQ r0, r0, 15	32'h00000f63	32'h00f00002
-ADD r14, r2, r2	—	32'h00210700
+Instructions – Standard vs Hardcoded (used in this core).
+
+| MEM Address | Machine Code | Instruction        | Comment               |
+|------------|--------------|------------------|----------------------|
+| 0          | 32'h02208300 | add r6, r1, r2   | i1                   |
+| 1          | 32'h02209380 | sub r7, r1, r2   | i2                   |
+| 2          | 32'h0230a400 | and r8, r1, r3   | i3                   |
+| 3          | 32'h02513480 | or r9, r2, r5    | i4                   |
+| 4          | 32'h0240c500 | xor r10, r1, r4  | i5                   |
+| 5          | 32'h02415580 | slt r11, r2, r4  | i6                   |
+| 6          | 32'h00520600 | addi r12, r4, 5  | i7                   |
+| 7          | 32'h00209181 | sw r3, r1, 2     | i8                   |
+| 8          | 32'h00208681 | lw r13, r1, 2    | i9                   |
+| 9          | 32'h00f00002 | beq r0, r0, 15   | i10                  |
+| 25         | 32'h00210700 | add r14, r2, r2  | i11                  |
 
     Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/funct3/rs1/rs2/funct7) so the intent is clear, while the Machine Code line shows the hardcoded 32-bit word actually used in this core (from netlist_tb.v)
 
@@ -243,9 +245,9 @@ ADD r14, r2, r2	—	32'h00210700
 **Type:** B-type  
 
 **Bitwise Layout:**
-| Field   | imm[12|10:5] | rs2    | rs1    | funct3 | imm[4:1|11] | opcode  |
-|---------|--------------|--------|--------|--------|-----------|---------|
-| Binary  | 0 000000      | 00000  | 00000  | 000    | 1111 0    | 1100011 |
+| Field        | imm[12] | imm[10:5] | rs2    | rs1    | funct3 | imm[4:1] | imm[11] | opcode  |
+|--------------|---------|-----------|--------|--------|--------|-----------|---------|---------|
+| Binary       | 0       | 000000    | 00000  | 00000  | 000    | 1110      | 0       | 1100011 |
 
 ---
 
