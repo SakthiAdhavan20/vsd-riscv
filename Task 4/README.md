@@ -56,7 +56,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ## RISC-V Instruction Breakdown
 
 ### 1. Instruction: add r6, r1, r2
-**RISC-V Instruction 1**
 
 - **Opcode:** 0110011  
 - **rd (r6 = x6):** 00110  
@@ -76,7 +75,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 2. Instruction: sub r7, r1, r2
-**RISC-V Instruction 2**
 
 - **Opcode:** 0110011  
 - **rd (r7 = x7):** 00111  
@@ -96,7 +94,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 3. Instruction: and r8, r1, r3
-**RISC-V Instruction 3**
 
 - **Opcode:** 0110011  
 - **rd (r8 = x8):** 01000  
@@ -116,7 +113,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 4. Instruction: or r9, r2, r5
-**RISC-V Instruction 4**
 
 - **Opcode:** 0110011  
 - **rd (r9 = x9):** 01001  
@@ -136,7 +132,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 5. Instruction: xor r10, r1, r4
-**RISC-V Instruction 5**
 
 - **Opcode:** 0110011  
 - **rd (r10 = x10):** 01010  
@@ -156,7 +151,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 6. Instruction: slt r11, r2, r4
-**RISC-V Instruction 6**
 
 - **Opcode:** 0110011  
 - **rd (r11 = x11):** 01011  
@@ -176,7 +170,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 7. Instruction: addi r12, r4, 5
-**RISC-V Instruction 7**
 
 - **Opcode:** 0010011  
 - **rd (r12 = x12):** 01100  
@@ -195,7 +188,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 8. Instruction: sw r3, r1, 2
-**RISC-V Instruction 8**
 
 - **Opcode:** 0100011  
 - **funct3:** 010  
@@ -214,7 +206,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 9. Instruction: lw r13, r1, 2
-**RISC-V Instruction 9**
 
 - **Opcode:** 0000011  
 - **rd (r13 = x13):** 01101  
@@ -233,7 +224,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 10. Instruction: beq r0, r0, 15
-**RISC-V Instruction 10**
 
 - **Opcode:** 1100011  
 - **funct3:** 000  
@@ -252,7 +242,6 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 ---
 
 ### 11. Instruction: add r14, r2, r2
-**RISC-V Instruction 11**
 
 - **Opcode:** 0110011  
 - **rd (r14 = x14):** 01110  
