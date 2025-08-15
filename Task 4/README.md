@@ -26,7 +26,7 @@ Run and simulate the Verilog code
 
 View the simulation waveform in GTKWave
 
-	gtkwave netlist.vcd
+	gtkwave iiitb_rv32i.vcd
 
 GTKWave will open and display the waveform window.
 
