@@ -260,3 +260,22 @@ Below, each instruction is shown in the standard RISC-V field layout (opcode/rd/
 |---------|----------|--------|--------|--------|--------|---------|
 | Binary  | 0000000  | 00010  | 00010  | 000    | 01110  | 0110011 |
 
+
+### Execution & Output Summary (0–120 s)
+
+| Time (s)  | Event / Signal Change |
+|-----------|-----------------------|
+| 0–10      | `IF_ID_IR = 02208300` (**add r6, r1, r2**) fetched; `ALUOUT = 3`; WB updates `REG[6] = 3`. |
+| 10–20     | `IF_ID_IR = 02209380` (**sub r7, r1, r2**) fetched; `ALUOUT = -1`; WB updates `REG[7] = -1`. |
+| 20–30     | `IF_ID_IR = 0230A400` (**and r8, r1, r3**) fetched; `ALUOUT = 1`; WB updates `REG[8] = 1`. |
+| 30–40     | `IF_ID_IR = 02513480` (**or r9, r2, r5**) fetched; `ALUOUT = 7`; WB updates `REG[9] = 7`. |
+| 40–50     | `IF_ID_IR = 0240C500` (**xor r10, r1, r4**) fetched; `ALUOUT = 5`; WB updates `REG[10] = 5`. |
+| 50–60     | `IF_ID_IR = 02415580` (**slt r11, r2, r4**) fetched; `ALUOUT = 1`; WB updates `REG[11] = 1`. |
+| 60–70     | `IF_ID_IR = 00520600` (**addi r12, r4, 5**) fetched; `ALUOUT = 9`; WB updates `REG[12] = 9`. |
+| 70–80     | `IF_ID_IR = 00209181` (**sw r3, r1, 2**) fetched; MEM updates `DM[3] = 3`. |
+| 80–90     | `IF_ID_IR = 00208681` (**lw r13, r1, 2**) fetched; `LDM = 3`; WB updates `REG[13] = 3`. |
+| 90–100    | `IF_ID_IR = 00F00002` (**beq r0, r0, 15**) fetched; NPC jumps to 25. |
+| 100–110   | Pipeline bubbles / branch flush. |
+| 110–120   | `IF_ID_IR = 00210700` (**add r14, r2, r2**) fetched; `ALUOUT = 4`; WB updates `REG[14] = 4`. |
+
+
